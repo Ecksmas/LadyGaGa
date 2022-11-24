@@ -1,9 +1,14 @@
 package org.example;
 
+import com.googlecode.lanterna.SGR;
+import com.googlecode.lanterna.TerminalSize;
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.graphics.TextGraphics;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
 import com.googlecode.lanterna.terminal.Terminal;
 
+import javax.swing.*;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -35,15 +40,14 @@ public class Main {
         terminal.putCharacter(bomb);
 
         Position[] obstacles = new Position[41];
-        for (int i = 0; i < 41; i++) {
+        for (int i = 0; i < obstacles.length; i++) {
             obstacles[i] = new Position(15 + i, 5);
-
         }
-
         for (Position p : obstacles) {
             terminal.setCursorPosition(p.x, p.y);
             terminal.putCharacter(block);
         }
+
         for (int i = 0; i < 41; i++) {
             obstacles[i] = new Position(15 + i, 20);
         }
@@ -176,9 +180,9 @@ public class Main {
 
 
         List<Position> monsters = new ArrayList<>();
-        monsters.add(new Position(3, 3));
+        monsters.add(new Position(24, 24));
         monsters.add(new Position(23, 23));
-        monsters.add(new Position(23, 3));
+        monsters.add(new Position(22, 22));
 
 
         boolean continueReadingInput = true;
@@ -214,14 +218,13 @@ public class Main {
                     break;
             }
 
+
+
             // Draw player
             terminal.setCursorPosition(oldPosition.x, oldPosition.y);
             terminal.putCharacter(' ');
             terminal.setCursorPosition(player.x, player.y);
             terminal.putCharacter(playerCharacter);
-
-
-            Position oldBombPosition = new Position(bombPosition.x, bombPosition.y);
 
 
                 terminal.flush();
@@ -246,10 +249,6 @@ public class Main {
                     terminal.putCharacter('X');
                 }
 
-                if (bombPosition.x == x && bombPosition.y == y) {
-                    terminal.close();
-                    continueReadingInput = false;
-                }
 
                 // Is the player alive?
                 for (Position monster : monsters) {
