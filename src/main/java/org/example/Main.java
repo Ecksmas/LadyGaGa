@@ -34,141 +34,141 @@ public class Main {
         terminal.setCursorPosition(bombPosition.x, bombPosition.y);
         terminal.putCharacter(bomb);
 
-        Position[] obsticles = new Position[41];
+        Position[] obstacles = new Position[41];
         for (int i = 0; i < 41; i++) {
-            obsticles[i] = new Position(15 + i, 5);
+            obstacles[i] = new Position(15 + i, 5);
 
         }
 
-        for (Position p : obsticles) {
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.x, p.y);
             terminal.putCharacter(block);
         }
         for (int i = 0; i < 41; i++) {
-            obsticles[i] = new Position(15 + i, 20);
+            obstacles[i] = new Position(15 + i, 20);
         }
-        for (Position p : obsticles) {
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.x, p.y);
             terminal.putCharacter(block);
         }
         for (int i = 0; i < 10; i++) {
-            obsticles[i] = new Position(5 + i, 15);
+            obstacles[i] = new Position(5 + i, 15);
         }
-        for (Position p : obsticles) {
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.y, p.x);
             terminal.putCharacter(block);
         }
 
         for (int i = 0; i < 10; i++) {
-            obsticles[i] = new Position(10 + i, 20);
+            obstacles[i] = new Position(10 + i, 20);
         }
-        for (Position p : obsticles) {
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.y, p.x);
             terminal.putCharacter(block);
         }
 
         for (int i = 0; i < 10; i++) {
-            obsticles[i] = new Position(5 + i, 25);
+            obstacles[i] = new Position(5 + i, 25);
         }
-        for (Position p : obsticles) {
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.y, p.x);
             terminal.putCharacter(block);
         }
 
         for (int i = 0; i < 10; i++) {
-            obsticles[i] = new Position(10 + i, 30);
+            obstacles[i] = new Position(10 + i, 30);
         }
-        for (Position p : obsticles) {
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.y, p.x);
             terminal.putCharacter(block);
         }
 
         for (int i = 0; i < 10; i++) {
-            obsticles[i] = new Position(5 + i, 35);
+            obstacles[i] = new Position(5 + i, 35);
         }
-        for (Position p : obsticles) {
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.y, p.x);
             terminal.putCharacter(block);
         }
         for (int i = 0; i < 10; i++) {
-            obsticles[i] = new Position(10 + i, 40);
+            obstacles[i] = new Position(10 + i, 40);
         }
-        for (Position p : obsticles) {
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.y, p.x);
             terminal.putCharacter(block);
         }
         for (int i = 0; i < 10; i++) {
-            obsticles[i] = new Position(5 + i, 45);
+            obstacles[i] = new Position(5 + i, 45);
         }
-        for (Position p : obsticles) {
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.y, p.x);
             terminal.putCharacter(block);
         }
         for (int i = 0; i < 10; i++) {
-            obsticles[i] = new Position(10 + i, 50);
+            obstacles[i] = new Position(10 + i, 50);
         }
-        for (Position p : obsticles) {
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.y, p.x);
             terminal.putCharacter(block);
         }
         for (int i = 0; i < 10; i++) {
-            obsticles[i] = new Position(5 + i, 55);
+            obstacles[i] = new Position(5 + i, 55);
         }
-        for (Position p : obsticles) {
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.y, p.x);
             terminal.putCharacter(block);
         }
 
         for (int i = 0; i < 10; i++) {
-            obsticles[i] = new Position(65 + i, 5);
+            obstacles[i] = new Position(65 + i, 5);
         }
-        for (Position p : obsticles) {
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.x, p.y);
             terminal.putCharacter(block);
         }
 
         for (int i = 0; i < 16; i++) {
-            obsticles[i] = new Position(5 + i, 65);
+            obstacles[i] = new Position(5 + i, 65);
         }
-        for (Position p : obsticles) {
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.y, p.x);
             terminal.putCharacter(block);
         }
 
         for (int i = 0; i < 8; i++) {
-            obsticles[i] = new Position(72 + i, 8);
+            obstacles[i] = new Position(72 + i, 8);
         }
-        for (Position p : obsticles) {
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.x, p.y);
             terminal.putCharacter(block);
         }
 
         for (int i = 0; i < 10; i++) {
-            obsticles[i] = new Position(65 + i, 11);
+            obstacles[i] = new Position(65 + i, 11);
         }
-        for (Position p : obsticles) {
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.x, p.y);
             terminal.putCharacter(block);
         }
 
         for (int i = 0; i < 8; i++) {
-            obsticles[i] = new Position(72 + i, 14);
+            obstacles[i] = new Position(72 + i, 14);
         }
-        for (Position p : obsticles) {
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.x, p.y);
             terminal.putCharacter(block);
         }
         for (int i = 0; i < 10; i++) {
-            obsticles[i] = new Position(65 + i, 17);
+            obstacles[i] = new Position(65 + i, 17);
         }
-        for (Position p : obsticles) {
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.x, p.y);
             terminal.putCharacter(block);
         }
         for (int i = 0; i < 8; i++) {
-            obsticles[i] = new Position(72 + i, 20);
+            obstacles[i] = new Position(72 + i, 20);
         }
-        for (Position p : obsticles) {
+        for (Position p : obstacles) {
             terminal.setCursorPosition(p.x, p.y);
             terminal.putCharacter(block);
         }
