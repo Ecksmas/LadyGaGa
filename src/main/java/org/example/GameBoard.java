@@ -26,6 +26,22 @@ public class GameBoard {
 		//tom CONSTRUCTOR
 	}
 
+	public int getX() {
+		return x;
+	}
+
+	public void setX(int x) {
+		this.x = x;
+	}
+
+	public int getY() {
+		return y;
+	}
+
+	public void setY(int y) {
+		this.y = y;
+	}
+
 	public GameBoard gameBoardHorizontal (int x, int y, int size, Terminal terminal) throws IOException {
 		List<List<Position>> listOfObstacles = new ArrayList<>();
 
@@ -48,7 +64,7 @@ public class GameBoard {
 		return null;
 	}
 
-	public GameBoard gameBoardVertical (int x, int y, int Size, Terminal terminal) throws IOException {
+	public GameBoard gameBoardVertical (int x, int y, int size, Terminal terminal) throws IOException {
 		List<List<Position>> listOfObstacles = new ArrayList<>();
 
 		for (int num = 0; num < size; num++) {
