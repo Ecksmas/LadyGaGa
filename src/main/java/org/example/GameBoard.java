@@ -11,14 +11,16 @@ public class GameBoard {
 	private int x;
 	private int y;
 	private int size;
-	char block = '\u2588';
+	char block;
 	Terminal terminal;
 
-	public GameBoard(int x, int y, int size, char block, Terminal terminal) {
+	List<Position> obstacles = new ArrayList<>();
+
+	public GameBoard(int x, int y, int size, Terminal terminal) {
 		this.x = x;
 		this.y = y;
 		this.size = size;
-		this.block = block;
+		this.block = '\u2588';
 		this.terminal = terminal;
 	}
 
@@ -42,48 +44,33 @@ public class GameBoard {
 		this.y = y;
 	}
 
-	public GameBoard gameBoardHorizontal (int x, int y, int size, Terminal terminal) throws IOException {
-		List<List<Position>> listOfObstacles = new ArrayList<>();
+	public GameBoard gameBoardHorizontal () throws IOException {
 
-		for (int num = 0; num < size; num++) {
-			List<Position> obstacles = new ArrayList<>();
-			obstacles.add(new Position(x, y));
-			listOfObstacles.add(obstacles);
-			x++;
-		}
-
-		for (int row = 0; row < listOfObstacles.size(); row++) {
-			for (int col = 0; col < listOfObstacles.get(row).size(); col++) {
-				Position newPos = listOfObstacles.get(row).get(col);
+			for (int col = this.getX(); col < this.getX() + size; col++) {
+				Position newPos = new Position(col, getY());
+				obstacles.add(newPos);
 				terminal.setCursorPosition(newPos.x, newPos.y);
 				terminal.putCharacter(this.block);
 			}
-		}
 
 
-		return null;
+		return this;
 	}
 
-	public GameBoard gameBoardVertical (int x, int y, int size, Terminal terminal) throws IOException {
-		List<List<Position>> listOfObstacles = new ArrayList<>();
+	public GameBoard gameBoardVertical () throws IOException {
 
-		for (int num = 0; num < size; num++) {
-			List<Position> obstacles = new ArrayList<>();
-			obstacles.add(new Position(x, y));
-			listOfObstacles.add(obstacles);
-			y++;
+		for (int col = this.getY(); col < this.getY() + size; col++) {
+			Position newPos = new Position(getY(), col);
+			obstacles.add(newPos);
+			terminal.setCursorPosition(newPos.x, newPos.y);
+			terminal.putCharacter(this.block);
 		}
 
-		for (int row = 0; row < listOfObstacles.size(); row++) {
-			for (int col = 0; col < listOfObstacles.get(row).size(); col++) {
-				Position newPos = listOfObstacles.get(row).get(col);
-				terminal.setCursorPosition(newPos.x, newPos.y);
-				terminal.putCharacter(this.block);
-			}
-		}
+		return this;
+	}
 
-
-		return null;
+	public List<Position> getObstacles (){
+		return obstacles;
 	}
 
 }

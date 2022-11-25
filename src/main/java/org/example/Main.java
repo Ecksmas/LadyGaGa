@@ -1,5 +1,7 @@
 package org.example;
 
+import com.googlecode.lanterna.SGR;
+import com.googlecode.lanterna.TerminalPosition;
 import com.googlecode.lanterna.TextColor;
 import com.googlecode.lanterna.input.KeyStroke;
 import com.googlecode.lanterna.terminal.DefaultTerminalFactory;
@@ -32,6 +34,28 @@ public class Main {
 		terminal.setCursorVisible(false);
 		terminal.setForegroundColor(TextColor.ANSI.YELLOW);
 
+        terminal.setCursorPosition(new TerminalPosition(32,1));
+        terminal.flush();
+        Thread.sleep(2000);
+        terminal.enableSGR(SGR.BOLD);
+        terminal.putCharacter('L');
+        terminal.putCharacter('A');
+        terminal.putCharacter('D');
+        terminal.putCharacter('Y');
+        terminal.putCharacter(' ');
+        terminal.putCharacter('G');
+        terminal.putCharacter('A');
+        terminal.putCharacter('G');
+        terminal.putCharacter('A');
+        terminal.putCharacter(' ');
+        terminal.putCharacter('G');
+        terminal.putCharacter('A');
+        terminal.putCharacter('M');
+        terminal.putCharacter('E');
+        terminal.putCharacter('!');
+        terminal.flush();
+        Thread.sleep(3000);
+
 		List<GameBoard> obstacles = createGameBoard(terminal);
 
         Player player = createPlayer();
@@ -43,6 +67,7 @@ public class Main {
 		drawCharacters(terminal, player, monsters);
 
         drawBombs(terminal, bombList);
+
         obstacleCollision(terminal, player, obstacles);
 
         do {
@@ -54,17 +79,89 @@ public class Main {
 
             drawCharacters(terminal, player, monsters);
 
-		} while (isPlayerAlive(player, monsters, bombList));
+            quitGame(terminal);
+
+        } while (isPlayerAlive(player, monsters, bombList));
 
 		terminal.setForegroundColor(TextColor.ANSI.RED);
 		terminal.setCursorPosition(player.getX(), player.getY());
 		terminal.putCharacter(player.getSymbol());
 		terminal.bell();
 		terminal.flush();
+        terminal.clearScreen();
+        terminal.setCursorPosition(new TerminalPosition(35,7));
+        terminal.flush();
+        Thread.sleep(2000);
+        terminal.enableSGR(SGR.BOLD);
+        terminal.putCharacter('G');
+        terminal.putCharacter('A');
+        terminal.putCharacter('M');
+        terminal.putCharacter('E');
+        terminal.putCharacter(' ');
+        terminal.putCharacter('O');
+        terminal.putCharacter('V');
+        terminal.putCharacter('E');
+        terminal.putCharacter('R');
+        terminal.putCharacter('!');
+        terminal.putCharacter('!');
+        terminal.putCharacter('!');
+        terminal.putCharacter('!');
+        terminal.putCharacter('!');
+        terminal.flush();
+        Thread.sleep(2000);
+        terminal.clearScreen();
+        terminal.setCursorPosition(new TerminalPosition(15,5));
+        terminal.flush();
+        terminal.enableSGR(SGR.BOLD);
+        terminal.putCharacter('T');
+        terminal.putCharacter('h');
+        terminal.putCharacter('e');
+        terminal.putCharacter(' ');
+        terminal.putCharacter('L');
+        terminal.putCharacter('i');
+        terminal.putCharacter('t');
+        terminal.putCharacter('t');
+        terminal.putCharacter('l');
+        terminal.putCharacter('e');
+        terminal.putCharacter(' ');
+        terminal.putCharacter('m');
+        terminal.putCharacter('o');
+        terminal.putCharacter('n');
+        terminal.putCharacter('s');
+        terminal.putCharacter('t');
+        terminal.putCharacter('e');
+        terminal.putCharacter('r');
+        terminal.putCharacter(' ');
+        terminal.putCharacter('k');
+        terminal.putCharacter('i');
+        terminal.putCharacter('l');
+        terminal.putCharacter('l');
+        terminal.putCharacter('e');
+        terminal.putCharacter('d');
+        terminal.putCharacter(' ');
+        terminal.putCharacter('y');
+        terminal.putCharacter('o');
+        terminal.putCharacter('u');
+        terminal.putCharacter('.');
+        terminal.putCharacter('.');
+        terminal.putCharacter('.');
+
+        terminal.flush();
+        Thread.sleep(3000);
+
 		terminal.close();
+
 	}
 
-	private static void drawBombs(Terminal terminal, List<Bomb> bombs) throws IOException {
+    private static void quitGame(Terminal terminal ) throws IOException, InterruptedException {
+        Character c = getUserKeyStroke(terminal).getCharacter(); // used Character instead of char because it might be null
+        if (c == Character.valueOf('q')) {
+            System.out.println("quit");
+            terminal.close();
+        }
+    }
+
+    private static void drawBombs(Terminal terminal, List<Bomb> bombs) throws IOException {
 		for (Bomb bomb : bombs){
 			terminal.setCursorPosition(bomb.getX(), bomb.getY());
 			terminal.putCharacter(bomb.getSymbol());
@@ -76,14 +173,6 @@ public class Main {
             monster.moveTowards(player);
         }
     }
-
-
-//			Character c = keyStroke.getCharacter(); // used Character instead of char because it might be null
-//			if (c == Character.valueOf('q')) {
-//				continueReadingInput = false;
-//				System.out.println("quit");
-//				terminal.close();
-//			}
 
 
 	private static void movePlayer(Player player, KeyStroke keyStroke) {
@@ -115,18 +204,18 @@ public class Main {
 
     public static List<GameBoard> createGameBoard(Terminal terminal) throws IOException {
         List<GameBoard> gameBoards = new ArrayList<>();
-        gameBoards.add(new GameBoard().gameBoardHorizontal(15, 5, 46, terminal));
-        gameBoards.add(new GameBoard().gameBoardHorizontal(15, 20, 46, terminal));
-        gameBoards.add(new GameBoard().gameBoardVertical(20, 8, 12, terminal));
-        gameBoards.add(new GameBoard().gameBoardVertical(15, 6, 12, terminal));
-        gameBoards.add(new GameBoard().gameBoardVertical(30, 8, 12, terminal));
-        gameBoards.add(new GameBoard().gameBoardVertical(25, 6, 12, terminal));
-        gameBoards.add(new GameBoard().gameBoardVertical(40, 8, 12, terminal));
-        gameBoards.add(new GameBoard().gameBoardVertical(35, 6, 12, terminal));
-        gameBoards.add(new GameBoard().gameBoardVertical(50, 8, 12, terminal));
-        gameBoards.add(new GameBoard().gameBoardVertical(45, 6, 12, terminal));
-        gameBoards.add(new GameBoard().gameBoardVertical(60, 8, 12, terminal));
-        gameBoards.add(new GameBoard().gameBoardVertical(55, 6, 12, terminal));
+        gameBoards.add(new GameBoard(15, 5, 46, terminal).gameBoardHorizontal());
+        gameBoards.add(new GameBoard(15, 20, 46, terminal).gameBoardHorizontal());
+        gameBoards.add(new GameBoard(20, 8, 12, terminal).gameBoardVertical());
+        gameBoards.add(new GameBoard(15, 6, 12, terminal).gameBoardVertical());
+        gameBoards.add(new GameBoard(30, 8, 12, terminal).gameBoardVertical());
+        gameBoards.add(new GameBoard(25, 6, 12, terminal).gameBoardVertical());
+        gameBoards.add(new GameBoard(40, 8, 12, terminal).gameBoardVertical());
+        gameBoards.add(new GameBoard(35, 6, 12, terminal).gameBoardVertical());
+        gameBoards.add(new GameBoard(50, 8, 12, terminal).gameBoardVertical());
+        gameBoards.add(new GameBoard(45, 6, 12, terminal).gameBoardVertical());
+        gameBoards.add(new GameBoard(60, 8, 12, terminal).gameBoardVertical());
+        gameBoards.add(new GameBoard(55, 6, 12, terminal).gameBoardVertical());
         return gameBoards;
     }
 
@@ -137,19 +226,19 @@ public class Main {
 
 	private static List<Monster> createMonsters() {
 		List<Monster> monsters = new ArrayList<>();
-		monsters.add(new Monster(5, 3));
-		monsters.add(new Monster(6, 3));
-		monsters.add(new Monster(7, 3));
+		monsters.add(new Monster(3, 3));
+		monsters.add(new Monster(3, 4));
+		monsters.add(new Monster(3, 5));
 		return monsters;
 	}
 
 
 	private static List<Bomb> createBombs(Terminal terminal) throws IOException {
 		List<Bomb> bombs = new ArrayList<>();
-		bombs.add(new Bomb(35,35).showBomb(terminal));
-		bombs.add(new Bomb(25,25).showBomb(terminal));
-		bombs.add(new Bomb(15,15).showBomb(terminal));
-		bombs.add(new Bomb(5,5).showBomb(terminal));
+		bombs.add(new Bomb(57,18).showBomb(terminal));
+		bombs.add(new Bomb(37,16).showBomb(terminal));
+		bombs.add(new Bomb(18,15).showBomb(terminal));
+		bombs.add(new Bomb(22,10).showBomb(terminal));
 		return bombs;
 	}
 
@@ -174,9 +263,9 @@ public class Main {
 
     }
 
-    private static void obstacleCollision(Terminal terminal, Player player, List<GameBoard> gameList) throws IOException {
+    private static void obstacleCollision(Terminal terminal, Player player, List<GameBoard> obstacles) throws IOException {
         boolean crashIntoObstacle = false;
-        for (GameBoard p : gameList ) {
+        for (GameBoard p : obstacles ) {
             if (p.getX() == player.getX() && p.getY() == player.getY()) {
                 crashIntoObstacle = true;
             }
@@ -206,15 +295,6 @@ public class Main {
 		}
 
 		return true;
-
-//		private static boolean isPlayerAlive(Player player, List<Monster> monsters) {
-//			for (Monster monster : monsters) {
-//				if (monster.getX() == player.getX() && monster.getY() == player.getY()) {
-//					return false;
-//				}
-//			}
-//			return true;
-//		}
 
 	}
 
