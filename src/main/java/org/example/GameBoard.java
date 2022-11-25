@@ -48,7 +48,7 @@ public class GameBoard {
 		return null;
 	}
 
-	public GameBoard gameBoardVertical (int x, int y, int Size, Terminal terminal) throws IOException {
+	public GameBoard gameBoardVertical (int x, int y, int size, Terminal terminal) throws IOException {
 		List<List<Position>> listOfObstacles = new ArrayList<>();
 
 		for (int num = 0; num < size; num++) {

@@ -1,16 +1,24 @@
 package org.example;
 
-public class Player {
+import com.googlecode.lanterna.TextColor;
+import com.googlecode.lanterna.terminal.Terminal;
+
+import java.io.IOException;
+
+public class Bomb {
 	private int x;
 	private int y;
 	private char symbol;
 	private int previousX;
 	private int previousY;
 
-	public Player(int x, int y, char symbol) {
+	public Bomb() {
+		//TOM CONSTRUCTOR
+	}
+	public Bomb(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.symbol = symbol;
+		this.symbol = 'O';
 		this.previousX = x;
 		this.previousY = y;
 	}
@@ -35,28 +43,11 @@ public class Player {
 		return previousY;
 	}
 
-	public void moveUp(){
-		previousX = x;
-		previousY = y;
-		y -= 1;
-	}
-
-	public void moveDown(){
-		previousX = x;
-		previousY = y;
-		y += 1;
-	}
-
-	public void moveLeft(){
-		previousX = x;
-		previousY = y;
-		x -= 1;
-	}
-
-	public void moveRight(){
-		previousX = x;
-		previousY = y;
-		x += 1;
+	public Bomb showBomb (Terminal terminal) throws IOException {
+		terminal.setCursorPosition(x, y);
+		terminal.putCharacter(symbol);
+		terminal.setForegroundColor(TextColor.ANSI.RED);
+		return this;
 	}
 
 }

@@ -7,10 +7,10 @@ public class Monster {
 	private int previousX;
 	private int previousY;
 
-	public Monster(int x, int y, char symbol) {
+	public Monster(int x, int y) {
 		this.x = x;
 		this.y = y;
-		this.symbol = symbol;
+		this.symbol = 'M';
 		this.previousX = x;
 		this.previousY = y;
 	}
