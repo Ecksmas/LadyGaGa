@@ -26,20 +26,23 @@ public class Main {
     }
 
 
-    private static void startGame() throws IOException, InterruptedException {
-        DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
-        Terminal terminal = terminalFactory.createTerminal();
-        terminal.setCursorVisible(false);
-        terminal.setForegroundColor(TextColor.ANSI.YELLOW);
+	private static void startGame() throws IOException, InterruptedException {
+		DefaultTerminalFactory terminalFactory = new DefaultTerminalFactory();
+		Terminal terminal = terminalFactory.createTerminal();
+		terminal.setCursorVisible(false);
+		terminal.setForegroundColor(TextColor.ANSI.YELLOW);
 
-        List<GameBoard> obstacles = createGameBoard(terminal);
+		List<GameBoard> obstacles = createGameBoard(terminal);
 
         Player player = createPlayer();
 
         List<Monster> monsters = createMonsters();
 
-        drawCharacters(terminal, player, monsters);
+		List<Bomb> bombList = createBombs(terminal);
 
+		drawCharacters(terminal, player, monsters);
+
+        drawBombs(terminal, bombList);
         obstacleCollision(terminal, player, obstacles);
 
         do {
@@ -51,15 +54,22 @@ public class Main {
 
             drawCharacters(terminal, player, monsters);
 
-        } while (isPlayerAlive(player, monsters));
+		} while (isPlayerAlive(player, monsters, bombList));
 
-        terminal.setForegroundColor(TextColor.ANSI.MAGENTA);
-        terminal.setCursorPosition(player.getX(), player.getY());
-        terminal.putCharacter(player.getSymbol());
-        terminal.bell();
-        terminal.flush();
-    }
+		terminal.setForegroundColor(TextColor.ANSI.RED);
+		terminal.setCursorPosition(player.getX(), player.getY());
+		terminal.putCharacter(player.getSymbol());
+		terminal.bell();
+		terminal.flush();
+		terminal.close();
+	}
 
+	private static void drawBombs(Terminal terminal, List<Bomb> bombs) throws IOException {
+		for (Bomb bomb : bombs){
+			terminal.setCursorPosition(bomb.getX(), bomb.getY());
+			terminal.putCharacter(bomb.getSymbol());
+		}
+	}
 
     private static void moveMonsters(Player player, List<Monster> monsters) {
         for (Monster monster : monsters) {
@@ -67,22 +77,31 @@ public class Main {
         }
     }
 
-    private static void movePlayer(Player player, KeyStroke keyStroke) {
-        switch (keyStroke.getKeyType()) {
-            case ArrowUp:
-                player.moveUp();
-                break;
-            case ArrowDown:
-                player.moveDown();
-                break;
-            case ArrowLeft:
-                player.moveLeft();
-                break;
-            case ArrowRight:
-                player.moveRight();
-                break;
-        }
-    }
+
+//			Character c = keyStroke.getCharacter(); // used Character instead of char because it might be null
+//			if (c == Character.valueOf('q')) {
+//				continueReadingInput = false;
+//				System.out.println("quit");
+//				terminal.close();
+//			}
+
+
+	private static void movePlayer(Player player, KeyStroke keyStroke) {
+		switch (keyStroke.getKeyType()) {
+			case ArrowUp:
+				player.moveUp();
+				break;
+			case ArrowDown:
+				player.moveDown();
+				break;
+			case ArrowLeft:
+				player.moveLeft();
+				break;
+			case ArrowRight:
+				player.moveRight();
+				break;
+		}
+	}
 
     private static KeyStroke getUserKeyStroke(Terminal terminal) throws InterruptedException, IOException {
         KeyStroke keyStroke;
@@ -116,20 +135,30 @@ public class Main {
     }
 
 
-    private static List<Monster> createMonsters() {
-        List<Monster> monsters = new ArrayList<>();
-        monsters.add(new Monster(5, 3, 'M'));
-        monsters.add(new Monster(6, 3, 'M'));
-        monsters.add(new Monster(7, 3, 'M'));
-        return monsters;
-    }
+	private static List<Monster> createMonsters() {
+		List<Monster> monsters = new ArrayList<>();
+		monsters.add(new Monster(5, 3));
+		monsters.add(new Monster(6, 3));
+		monsters.add(new Monster(7, 3));
+		return monsters;
+	}
 
 
-    private static void drawCharacters(Terminal terminal, Player player, List<Monster> monsters) throws
-            IOException {
-        for (Monster monster : monsters) {
-            terminal.setCursorPosition(monster.getPreviousX(), monster.getPreviousY());
-            terminal.putCharacter(' ');
+	private static List<Bomb> createBombs(Terminal terminal) throws IOException {
+		List<Bomb> bombs = new ArrayList<>();
+		bombs.add(new Bomb(35,35).showBomb(terminal));
+		bombs.add(new Bomb(25,25).showBomb(terminal));
+		bombs.add(new Bomb(15,15).showBomb(terminal));
+		bombs.add(new Bomb(5,5).showBomb(terminal));
+		return bombs;
+	}
+
+
+	private static void drawCharacters(Terminal terminal, Player player, List<Monster> monsters) throws
+			IOException {
+		for (Monster monster : monsters) {
+			terminal.setCursorPosition(monster.getPreviousX(), monster.getPreviousY());
+			terminal.putCharacter(' ');
 
             terminal.setCursorPosition(monster.getX(), monster.getY());
             terminal.putCharacter(monster.getSymbol());
@@ -163,14 +192,30 @@ public class Main {
         }
     }
 
-    private static boolean isPlayerAlive(Player player, List<Monster> monsters) {
-        for (Monster monster : monsters) {
-            if (monster.getX() == player.getX() && monster.getY() == player.getY()) {
-                return false;
-            }
-        }
-        return true;
-    }
+	private static boolean isPlayerAlive(Player player, List<Monster> monsters, List<Bomb> bombList) {
+		for (Monster monster : monsters) {
+			if (monster.getX() == player.getX() && monster.getY() == player.getY()) {
+				return false;
+			}
+		}
 
+		for (var bomb : bombList) {
+			if (bomb.getX() == player.getX() && bomb.getY() == player.getY()) {
+				return false;
+			}
+		}
+
+		return true;
+
+//		private static boolean isPlayerAlive(Player player, List<Monster> monsters) {
+//			for (Monster monster : monsters) {
+//				if (monster.getX() == player.getX() && monster.getY() == player.getY()) {
+//					return false;
+//				}
+//			}
+//			return true;
+//		}
+
+	}
 
 }
